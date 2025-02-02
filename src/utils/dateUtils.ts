@@ -55,6 +55,9 @@ export function getWeeksAtMonth(currentDate: Date) {
 }
 
 export function getEventsForDay(events: Event[], date: number): Event[] {
+  if (date > 31 || date < 1) {
+    return [];
+  }
   return events.filter((event) => new Date(event.date).getDate() === date);
 }
 
