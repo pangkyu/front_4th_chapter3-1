@@ -25,11 +25,76 @@ describe('parseDateTime', () => {
 });
 
 describe('convertEventToDateRange', () => {
-  it('일반적인 이벤트를 올바른 시작 및 종료 시간을 가진 객체로 변환한다', () => {});
+  const event: Event[] = [
+    {
+      title: '산책하기',
+      date: '2025-02-03',
+      startTime: '18:30',
+      endTime: '20:30',
+      description: '혜화동 한바퀴 돌기',
+      location: '혜화',
+      category: '기타',
+      repeat: {
+        type: 'weekly',
+        interval: 5,
+      },
+      notificationTime: 10,
+      id: '1',
+    },
+    {
+      title: '항해 오프라인',
+      date: '2025-13-11',
+      startTime: '13:00',
+      endTime: '18:00',
+      description: '항해 오프라인 듣는 날',
+      location: '선릉',
+      category: '공부',
+      repeat: {
+        type: 'weekly',
+        interval: 10,
+      },
+      notificationTime: 10,
+      id: '2',
+    },
+    {
+      title: '출근하기',
+      date: '2025-02-04',
+      startTime: '08:30',
+      endTime: '26:30',
+      description: '출근하자..',
+      location: '혜화',
+      category: '업무',
+      repeat: {
+        type: 'daily',
+        interval: 5,
+      },
+      notificationTime: 10,
+      id: '3',
+    },
+  ];
+  it('일반적인 이벤트를 올바른 시작 및 종료 시간을 가진 객체로 변환한다', () => {
+    const result = convertEventToDateRange(event[0]);
+    expect(result).toEqual({
+      start: new Date(`${event[0].date} ${event[0].startTime}`),
+      end: new Date(`${event[0].date} ${event[0].endTime}`),
+    });
+  });
 
-  it('잘못된 날짜 형식의 이벤트에 대해 Invalid Date를 반환한다', () => {});
+  it('잘못된 날짜 형식의 이벤트에 대해 Invalid Date를 반환한다', () => {
+    const result = convertEventToDateRange(event[1]);
+    expect(result).toEqual({
+      start: new Date(`${event[1].date} ${event[1].startTime}`),
+      end: new Date(`${event[1].date} ${event[1].endTime}`),
+    });
+  });
 
-  it('잘못된 시간 형식의 이벤트에 대해 Invalid Date를 반환한다', () => {});
+  it('잘못된 시간 형식의 이벤트에 대해 Invalid Date를 반환한다', () => {
+    const result = convertEventToDateRange(event[2]);
+    expect(result).toEqual({
+      start: new Date(`${event[2].date} ${event[2].startTime}`),
+      end: new Date(`${event[2].date} ${event[2].endTime}`),
+    });
+  });
 });
 
 describe('isOverlapping', () => {
