@@ -155,7 +155,86 @@ describe('isOverlapping', () => {
 });
 
 describe('findOverlappingEvents', () => {
-  it('새 이벤트와 겹치는 모든 이벤트를 반환한다', () => {});
+  const event: Event[] = [
+    {
+      title: '산책하기',
+      date: '2025-02-03',
+      startTime: '18:30',
+      endTime: '20:30',
+      description: '혜화동 한바퀴 돌기',
+      location: '혜화',
+      category: '기타',
+      repeat: {
+        type: 'weekly',
+        interval: 5,
+      },
+      notificationTime: 10,
+      id: '1',
+    },
+    {
+      title: '항해 오프라인',
+      date: '2025-02-03',
+      startTime: '13:00',
+      endTime: '19:00',
+      description: '항해 오프라인 듣는 날',
+      location: '선릉',
+      category: '공부',
+      repeat: {
+        type: 'weekly',
+        interval: 10,
+      },
+      notificationTime: 10,
+      id: '2',
+    },
+    {
+      title: '출근하기',
+      date: '2025-02-04',
+      startTime: '08:30',
+      endTime: '18:30',
+      description: '출근하자..',
+      location: '혜화',
+      category: '업무',
+      repeat: {
+        type: 'daily',
+        interval: 5,
+      },
+      notificationTime: 10,
+      id: '3',
+    },
+  ];
+  it('새 이벤트와 겹치는 모든 이벤트를 반환한다', () => {
+    const newEvent: Event[] = [
+      {
+        title: '저녁 약속',
+        date: '2025-02-03',
+        startTime: '18:00',
+        endTime: '19:30',
+        description: '친구랑 저녁 먹기',
+        location: '강남',
+        category: '약속',
+        repeat: { type: 'none', interval: 1 },
+        notificationTime: 15,
+        id: '4',
+      },
+    ];
+    expect(findOverlappingEvents(newEvent[0], event)).toEqual([event[0], event[1]]);
+  });
 
-  it('겹치는 이벤트가 없으면 빈 배열을 반환한다', () => {});
+  it('겹치는 이벤트가 없으면 빈 배열을 반환한다', () => {
+    const newEvent: Event[] = [
+      {
+        title: '영화보기',
+        date: '2025-02-14',
+        startTime: '20:00',
+        endTime: '22:30',
+        description: '영화보기',
+        location: '동대문',
+        category: '약속',
+        repeat: { type: 'none', interval: 1 },
+        notificationTime: 15,
+        id: '5',
+      },
+    ];
+    expect(findOverlappingEvents(newEvent[0], event)).toEqual([]);
+  });
 });
