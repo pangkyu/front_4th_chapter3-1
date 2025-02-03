@@ -98,9 +98,60 @@ describe('convertEventToDateRange', () => {
 });
 
 describe('isOverlapping', () => {
-  it('두 이벤트가 겹치는 경우 true를 반환한다', () => {});
+  const event: Event[] = [
+    {
+      title: '산책하기',
+      date: '2025-02-03',
+      startTime: '18:30',
+      endTime: '20:30',
+      description: '혜화동 한바퀴 돌기',
+      location: '혜화',
+      category: '기타',
+      repeat: {
+        type: 'weekly',
+        interval: 5,
+      },
+      notificationTime: 10,
+      id: '1',
+    },
+    {
+      title: '항해 오프라인',
+      date: '2025-02-03',
+      startTime: '13:00',
+      endTime: '19:00',
+      description: '항해 오프라인 듣는 날',
+      location: '선릉',
+      category: '공부',
+      repeat: {
+        type: 'weekly',
+        interval: 10,
+      },
+      notificationTime: 10,
+      id: '2',
+    },
+    {
+      title: '출근하기',
+      date: '2025-02-04',
+      startTime: '08:30',
+      endTime: '18:30',
+      description: '출근하자..',
+      location: '혜화',
+      category: '업무',
+      repeat: {
+        type: 'daily',
+        interval: 5,
+      },
+      notificationTime: 10,
+      id: '3',
+    },
+  ];
+  it('두 이벤트가 겹치는 경우 true를 반환한다', () => {
+    expect(isOverlapping(event[0], event[1])).toBe(true);
+  });
 
-  it('두 이벤트가 겹치지 않는 경우 false를 반환한다', () => {});
+  it('두 이벤트가 겹치지 않는 경우 false를 반환한다', () => {
+    expect(isOverlapping(event[1], event[2])).toBe(false);
+  });
 });
 
 describe('findOverlappingEvents', () => {
